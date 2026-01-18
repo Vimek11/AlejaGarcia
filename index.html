@@ -3,33 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aleja - Próximamente</title>
+    <title>Aleja | 2026</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f9;
+            background-color: #0a0a0a; /* Negro muy oscuro */
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            color: #333;
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: #ffffff;
+            overflow: hidden;
         }
-        .container {
-            text-align: center;
-            padding: 2rem;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        .content { text-align: center; }
+        h1 {
+            font-size: 4rem;
+            letter-spacing: 8px;
+            font-weight: 200;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            opacity: 0.9;
         }
-        h1 { font-size: 3rem; margin-bottom: 0.5rem; color: #ff4081; }
-        p { font-size: 1.2rem; color: #666; }
+        .status {
+            font-size: 1rem;
+            color: #888;
+            letter-spacing: 4px;
+            animation: pulse 3s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Aleja</h1>
-        <p>Próximamente...</p>
+    <div class="content">
+        <h1>ALEJA</h1>
+        <p class="status">PRÓXIMAMENTE</p>
     </div>
 </body>
 </html>
