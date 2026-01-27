@@ -3,44 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aleja | 2026</title>
+    <title>Para Aleja | 2026</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            background-color: #0a0a0a; /* Negro muy oscuro */
+            background: #050505;
             height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             font-family: 'Inter', -apple-system, sans-serif;
             color: #ffffff;
             overflow: hidden;
+            padding: 30px;
         }
-        .content { text-align: center; }
+
+        #canvas-stars {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0;
+        }
+
+        .container {
+            z-index: 1;
+            max-width: 100%;
+            width: 380px;
+            text-align: left;
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            padding-left: 25px;
+            animation: fadeIn 3s ease-out;
+        }
+
         h1 {
-            font-size: 4rem;
-            letter-spacing: 8px;
+            font-size: 2rem;
+            letter-spacing: 10px;
             font-weight: 200;
-            text-transform: uppercase;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            color: #fff;
             opacity: 0.9;
         }
-        .status {
-            font-size: 1rem;
-            color: #888;
-            letter-spacing: 4px;
-            animation: pulse 3s infinite ease-in-out;
+
+        .text-block {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #ccc;
+            font-weight: 300;
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
+
+        .highlight {
+            color: #fff;
+            font-weight: 500;
+            display: block;
+            margin: 15px 0;
+            font-style: italic;
+        }
+
+        .interaction-area {
+            margin-top: 45px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .heart-icon {
+            font-size: 2.8rem;
+            color: #222;
+            transition: all 0.5s ease;
+        }
+
+        .number-code {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ff3e3e;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .interaction-area:active .heart-icon,
+        .interaction-area:hover .heart-icon {
+            color: #ff3e3e;
+            transform: scale(1.1);
+            text-shadow: 0 0 25px rgba(255, 62, 62, 0.6);
+        }
+
+        .interaction-area:active .number-code,
+        .interaction-area:hover .number-code {
+            opacity: 1;
+            transform: scale(1) translateX(10px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 30px;
+            font-size: 0.6rem;
+            letter-spacing: 5px;
+            color: #444;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
-    <div class="content">
+
+    <canvas id="canvas-stars"></canvas>
+
+    <div class="container">
         <h1>ALEJA</h1>
-        <p class="status">PRÓXIMAMENTE</p>
+        
+        <div class="text-block">
+            A veces la rutina hace que se te olvide lo capaz que eres, 
+            <span class="highlight">
+                pero la realidad es que puedes con todo lo que te propongas.
+            </span>
+            Tienes una mezcla perfecta entre inteligencia, seguridad y esa chispa que te hace destacar siempre. No importa cómo haya ido el día, no pierdas de vista lo increíble que eres, hoy y siempre.
+        </div>
+
+        <div class="interaction-area">
+            <div class="heart-icon">❤</div>
+            <div class="number-code">3</div>
+        </div>
     </div>
+
+    <div class="footer">Lunes, 26 de Enero // 2026 Día 1 </div>
+
+    <script>
+        const canvas = document.getElementById('canvas-stars');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        function initStars() {
+            stars = [];
+            for(let i = 0; i < 180; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 2.5 + 0.5,
+                    speed: Math.random() * 0.5 + 0.2,
+                    opacity: Math.random()
+                });
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => {
+                ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+                star.y -= star.speed;
+                if(star.y < 0) star.y = canvas.height;
+            });
+            requestAnimationFrame(draw);
+        }
+
+        initStars();
+        draw();
+    </script>
 </body>
 </html>
